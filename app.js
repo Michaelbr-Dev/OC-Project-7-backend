@@ -11,6 +11,7 @@ const helmet = require('helmet');
 
 // TODO: add routes files
 const authRoutes = require('./routes/Auth');
+const usersRoutes = require('./routes/User');
 
 /**
  * @description It's loading the environment variables from the .env file.
@@ -47,6 +48,7 @@ app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 
 // TODO: Add routers
 app.use('/api/auth', authRoutes);
+app.use('/api/users', usersRoutes);
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 

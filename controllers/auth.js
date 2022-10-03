@@ -50,7 +50,7 @@ exports.signup = async (req, res) => {
 
   const avatarImg = req.file
     ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    : '../images/default_user.jpg';
+    : `${req.protocol}://${req.get('host')}/images/avatar/default_user.jpg`;
 
   const user = new User({
     email: req.body.email,
