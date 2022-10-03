@@ -4,7 +4,7 @@
  */
 
 const express = require('express');
-const userCtrl = require('../controllers/user');
+const authCtrl = require('../controllers/auth');
 const auth = require('../middlewares/auth');
 const multerAvatar = require('../middlewares/multer-config-avatar');
 
@@ -12,8 +12,8 @@ const inputValidator = require('../middlewares/input-validation');
 
 const router = express.Router();
 
-router.post('/signup', inputValidator.userValidation, multerAvatar, userCtrl.signup);
-router.post('/login', inputValidator.userValidation, userCtrl.login);
-router.get('/profile', auth, userCtrl.profile);
+router.post('/signup', inputValidator.userValidation, multerAvatar, authCtrl.signup);
+router.post('/login', inputValidator.userValidation, authCtrl.login);
+router.get('/profile', auth, authCtrl.profile);
 
 module.exports = router;
