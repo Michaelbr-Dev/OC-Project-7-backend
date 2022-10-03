@@ -123,9 +123,8 @@ exports.login = async (req, res) => {
 
 /**
  * @function profile
- * @description The code is checking if the user exists in the database
- * and if the password is correct. If the user exists and the password is correct, it returns the
- * userId and a token.
+ * @description The code is checking if the user exists in the database.
+ * If the user exists, it returns the user properties.
  *
  * @param {object} req      - Express request object.
  * @param {object} req.user - Request user.
