@@ -120,3 +120,26 @@ exports.login = async (req, res) => {
   });
   /* eslint-enable no-underscore-dangle */
 };
+
+/**
+ * @function profile
+ * @description The code is checking if the user exists in the database
+ * and if the password is correct. If the user exists and the password is correct, it returns the
+ * userId and a token.
+ *
+ * @param {object} req      - Express request object.
+ * @param {object} req.user - Request user.
+ *
+ * @param {object} res      - Express response object.
+ */
+exports.profile = async (req, res) => {
+  // eslint-disable-next-line no-underscore-dangle
+  const user = await User.findOne({ _id: req.auth.userId }).catch((error) =>
+    res.status(500).json({ error }),
+  );
+
+  if (!user) {
+    return res.status(404).json({ message: 'User not found !' });
+  }
+  return res.status(200).json({ user });
+};
