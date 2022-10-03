@@ -12,5 +12,6 @@ const inputValidator = require('../middlewares/input-validation');
 const router = express.Router();
 
 router.post('/signup', inputValidator.userValidation, multerAvatar, userCtrl.signup);
+router.post('/login', inputValidator.userValidation, userCtrl.login);
 
 module.exports = router;
