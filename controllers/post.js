@@ -29,3 +29,18 @@ exports.createPost = async (req, res) => {
   await post.save().catch((error) => res.status(500).json({ error }));
   res.status(201).json({ message: 'Post registered ! ' });
 };
+
+/**
+ * @function getAllPosts
+ * @description Return all posts in database.
+ *
+ * @param {object} _req - Express request object.
+ *
+ * @param {object} res  - Express response object.
+ */
+exports.getAllPost = async (_req, res) => {
+  const posts = await Post.find().catch((error) => {
+    return res.status(500).json({ error });
+  });
+  return res.status(200).json(posts);
+};
