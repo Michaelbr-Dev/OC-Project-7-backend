@@ -57,6 +57,7 @@ exports.signup = async (req, res) => {
     password: hash,
     username: req.body.username,
     avatar: avatarImg,
+    isAdmin: false,
   });
 
   await user.save().catch((error) => res.status(500).json({ error }));
@@ -116,7 +117,7 @@ exports.login = async (req, res) => {
   /* eslint-disable no-underscore-dangle */
   return res.status(200).json({
     userId: user._id,
-    token: jwt.sign({ userId: user._id }, process.env.SEC_TOK, { expiresIn: '24h' }),
+    token: jwt.sign({ userId: user._id }, process.env.SEC_TOK, { expiresIn: '2h' }),
   });
   /* eslint-enable no-underscore-dangle */
 };
