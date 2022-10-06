@@ -13,5 +13,6 @@ const router = express.Router();
 
 router.get('/:userId', auth, userCtrl.getUser);
 router.put('/:userId', auth, userCtrl.updateUser);
+router.delete('/:userId', auth, userCtrl.deleteUser);
 
 module.exports = router;
