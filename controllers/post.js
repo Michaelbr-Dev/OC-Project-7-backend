@@ -191,7 +191,7 @@ exports.likeDislike = async (req, res) => {
   const { postId } = req.params;
 
   const post = await Post.findOne({ _id: postId }).catch((error) =>
-    response.status(500).json({ error }),
+    res.status(500).json({ error }),
   );
   switch (req.body.like) {
     case 1:
