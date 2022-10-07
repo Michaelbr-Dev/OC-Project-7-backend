@@ -88,10 +88,35 @@ exports.updatePost = async (req, res) => {
     }
     if (req.file && post.attachement) {
       const filename = post.attachement.split('/images/posts/')[1];
-      await fs.unlink(`/images/posts/${filename}`);
+      await fs.unlink(`./images/posts/${filename}`);
     }
     await Post.updateOne({ _id: req.params.postId }, { ...postObject, _id: req.params.postId });
     return res.status(200).json({ message: 'Post updated!' });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
+
+/**
+ * @function deletePost
+ * @description Update one posts in database with his ID.
+ *
+ * @param {object} req - Express request object.
+ *
+ * @param {object} res - Express response object.
+ */
+exports.deletePost = async (req, res) => {
+  try {
+    const post = await Post.findOne({ _id: req.params.postId });
+    if (post.userId !== req.auth.userId && req.auth.isAdmin !== true) {
+      return res.status(403).json({ error: 'Forbidden!' });
+    }
+    if (post.attachement) {
+      const filename = post.attachement.split('/images/posts/')[1];
+      await fs.unlink(`./images/posts/${filename}`);
+    }
+    await Post.deleteOne({ _id: req.params.postId });
+    return res.status(200).json({ message: 'Post deleted!' });
   } catch (error) {
     return res.status(500).json({ error });
   }

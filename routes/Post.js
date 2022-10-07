@@ -16,5 +16,6 @@ router.get('/', auth, postCtrl.getAllPost);
 router.post('/', auth, multerAttachement, postCtrl.createPost);
 router.get('/:postId', auth, postCtrl.getOnePost);
 router.put('/:postId', auth, multerAttachement, postCtrl.updatePost);
+router.delete('/:postId', auth, postCtrl.deletePost);
 
 module.exports = router;
