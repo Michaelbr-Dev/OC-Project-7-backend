@@ -10,6 +10,7 @@ const postSchema = mongoose.Schema({
   userId: { type: String, required: true },
   content: { type: String, maxlenght: 500 },
   attachement: { type: String, required: false },
+  likes: { type: Number, required: false },
   usersLiked: { type: Array, required: true },
 });
 

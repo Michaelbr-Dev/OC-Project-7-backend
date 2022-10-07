@@ -17,5 +17,6 @@ router.post('/', auth, multerAttachement, postCtrl.createPost);
 router.get('/:postId', auth, postCtrl.getOnePost);
 router.put('/:postId', auth, multerAttachement, postCtrl.updatePost);
 router.delete('/:postId', auth, postCtrl.deletePost);
+router.post('/:postId/reaction', auth, postCtrl.likeDislike);
 
 module.exports = router;
