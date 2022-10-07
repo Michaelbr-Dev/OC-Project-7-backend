@@ -26,8 +26,8 @@ const auth = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.SEC_TOK);
-    const { userId } = decodedToken;
-    req.auth = { userId };
+    const { userId, isAdmin } = decodedToken;
+    req.auth = { userId, isAdmin };
     return next();
   } catch (error) {
     return res.status(401).json({ error });

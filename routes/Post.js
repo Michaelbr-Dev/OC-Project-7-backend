@@ -15,4 +15,6 @@ const router = express.Router();
 router.get('/', auth, postCtrl.getAllPost);
 router.post('/', auth, multerAttachement, postCtrl.createPost);
 router.get('/:postId', auth, postCtrl.getOnePost);
+router.put('/:postId', auth, multerAttachement, postCtrl.updatePost);
+
 module.exports = router;

@@ -117,7 +117,9 @@ exports.login = async (req, res) => {
   /* eslint-disable no-underscore-dangle */
   return res.status(200).json({
     userId: user._id,
-    token: jwt.sign({ userId: user._id }, process.env.SEC_TOK, { expiresIn: '2h' }),
+    token: jwt.sign({ userId: user._id, isAdmin: user.isAdmin }, process.env.SEC_TOK, {
+      expiresIn: '2h',
+    }),
   });
   /* eslint-enable no-underscore-dangle */
 };
