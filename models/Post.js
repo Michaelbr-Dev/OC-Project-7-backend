@@ -6,9 +6,12 @@
 const mongoose = require('mongoose');
 
 const postSchema = mongoose.Schema({
+  username: { type: String, required: true },
   userId: { type: String, required: true },
-  content: { type: String, required: true },
+  content: { type: String, maxlenght: 500 },
   attachement: { type: String, required: false },
+  likes: { type: Number, required: true },
+  usersLiked: { type: Array, required: true },
 });
 
 module.exports = mongoose.model('Post', postSchema);
