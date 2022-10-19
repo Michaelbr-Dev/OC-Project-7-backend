@@ -38,6 +38,20 @@ const validMail = (email) => {
 };
 
 /**
+ * @function validName
+ * @description Checks if the first and last name is valid.
+ *
+ * @param   {string}  name - The name of the user.
+ *
+ * @returns {boolean}      -    True if the name is valid.
+ */
+const validName = (name) => {
+  const regexInput =
+    /^[A-ZÀÈÌÒÙÁÉÍÓÚÝÂÊÎÔÛÃÑÕÄËÏÖÜŸÇßØÅÆ]{1}[a-zàèìòùáéíóúýâêîôûãñõäëïöüÿçøåæœ]{2,15}$/i;
+  return regexInput.test(name);
+};
+
+/**
  * @function userValidation
  * @description Validate all user informations.
  *
@@ -60,6 +74,12 @@ exports.userValidation = (req, res, next) => {
   }
   if (!validMail(req.body.email)) {
     return res.status(400).json({ message: 'Invalid email address' });
+  }
+  if (!validName(req.body.firstName)) {
+    return res.status(400).json({ message: 'Invalid firstName' });
+  }
+  if (!validName(req.body.lastName)) {
+    return res.status(400).json({ message: 'Invalid lastName' });
   }
   return next();
 };
