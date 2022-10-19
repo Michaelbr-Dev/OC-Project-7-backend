@@ -48,9 +48,7 @@ exports.signup = async (req, res) => {
 
   const hash = await bcrypt.hash(req.body.password, 15);
 
-  const avatarImg = req.file
-    ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    : `${req.protocol}://${req.get('host')}/images/avatar/default_user.png`;
+  const avatarImg = req.file ? `/images/${req.file.filename}` : `/images/avatar/default_user.png`;
 
   const user = new User({
     email: req.body.email,
