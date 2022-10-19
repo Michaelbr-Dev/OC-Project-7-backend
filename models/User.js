@@ -4,6 +4,9 @@
  */
 
 const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
+
 const uniqueValidator = require('mongoose-unique-validator');
 
 const userSchema = mongoose.Schema({
@@ -13,6 +16,13 @@ const userSchema = mongoose.Schema({
   lastName: { type: String, required: true },
   avatar: { type: String, required: true },
   isAdmin: { type: Boolean, required: false },
+  posts: [
+    {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Post',
+    },
+  ],
 });
 
 userSchema.plugin(uniqueValidator);
