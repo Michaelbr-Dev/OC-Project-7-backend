@@ -23,7 +23,7 @@ exports.createPost = async (req, res) => {
   const post = new Post({
     ...postObject,
     userId: req.auth.userId,
-    attachement: req.file ? `/images/${req.file.filename}` : undefined,
+    attachement: req.file ? `/images/posts/${req.file.filename}` : undefined,
     usersLiked: [],
   });
   await post.save().catch((error) => res.status(500).json({ error }));
