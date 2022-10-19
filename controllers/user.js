@@ -41,7 +41,7 @@ exports.updateUser = async (req, res) => {
     const userObject = req.file
       ? {
           ...JSON.parse(req.body.user),
-          avatarUrl: `${req.protocol}://${req.host}/images/avatar/${req.file.filename}`,
+          avatarUrl: `/images/avatar/${req.file.filename}`,
         }
       : { ...req.body };
     userObject.password = userObject.password
