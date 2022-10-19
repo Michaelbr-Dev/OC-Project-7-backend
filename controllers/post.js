@@ -39,9 +39,11 @@ exports.createPost = async (req, res) => {
  * @param {object} res  - Express response object.
  */
 exports.getAllPost = async (_req, res) => {
-  const posts = await Post.find().catch((error) => {
-    return res.status(500).json({ error });
-  });
+  const posts = await Post.find()
+    .populate('user')
+    .catch((error) => {
+      return res.status(500).json({ error });
+    });
   return res.status(200).json({ posts });
 };
 
