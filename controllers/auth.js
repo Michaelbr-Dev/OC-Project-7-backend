@@ -50,12 +50,13 @@ exports.signup = async (req, res) => {
 
   const avatarImg = req.file
     ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    : `${req.protocol}://${req.get('host')}/images/avatar/default_user.jpg`;
+    : `${req.protocol}://${req.get('host')}/images/avatar/default_user.png`;
 
   const user = new User({
     email: req.body.email,
     password: hash,
-    username: req.body.username,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     avatar: avatarImg,
     isAdmin: false,
   });
@@ -117,6 +118,7 @@ exports.login = async (req, res) => {
   /* eslint-disable no-underscore-dangle */
   return res.status(200).json({
     userId: user._id,
+    isAdmin: user.isAdmin,
     token: jwt.sign({ userId: user._id, isAdmin: user.isAdmin }, process.env.SEC_TOK, {
       expiresIn: '2h',
     }),
