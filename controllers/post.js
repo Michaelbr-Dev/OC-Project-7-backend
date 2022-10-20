@@ -17,13 +17,14 @@ const Post = require('../models/Post');
  * @param {object} res - Express response object.
  */
 exports.createPost = async (req, res) => {
-  const postObject = JSON.parse(req.body.post);
+  const postObject = JSON.parse(req.body.post || '{}');
   // eslint-disable-next-line no-underscore-dangle
   delete postObject._id;
   const post = new Post({
     ...postObject,
-    userId: req.auth.userId,
+    user: req.auth.userId,
     attachement: req.file ? `/images/posts/${req.file.filename}` : undefined,
+    likes: 0,
     usersLiked: [],
   });
   await post.save().catch((error) => res.status(500).json({ error }));
@@ -110,7 +111,7 @@ exports.updatePost = async (req, res) => {
 exports.deletePost = async (req, res) => {
   try {
     const post = await Post.findOne({ _id: req.params.postId });
-    if (post.userId !== req.auth.userId && req.auth.isAdmin !== true) {
+    if (!post.user.equals(req.auth.userId) && req.auth.isAdmin !== true) {
       return res.status(403).json({ error: 'Forbidden!' });
     }
     if (post.attachement) {
