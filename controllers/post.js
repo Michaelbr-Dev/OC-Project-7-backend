@@ -72,32 +72,54 @@ exports.getOnePost = async (req, res) => {
  * @param {object} res - Express response object.
  */
 exports.updatePost = async (req, res) => {
-  try {
-    const postObject = req.file
-      ? {
-          ...JSON.parse(req.body.post),
-          attachement: `/images/posts/${req.file.filename}`,
-        }
-      : { ...req.body };
-
-    /* eslint-disable no-underscore-dangle */
-    delete postObject.userId;
-    delete postObject._id;
-    /* eslint-enable no-underscore-dangle */
-    delete postObject.usersLiked;
-    const post = await Post.findOne({ _id: req.params.postId });
-    if (post.userId !== req.auth.userId && req.auth.isAdmin !== true) {
-      return res.status(403).json({ error: 'Forbidden !' });
-    }
-    if (req.file && post.attachement) {
-      const filename = post.attachement.split('/images/posts/')[1];
-      await fs.unlink(`./images/posts/${filename}`);
-    }
-    await Post.updateOne({ _id: req.params.postId }, { ...postObject, _id: req.params.postId });
-    return res.status(200).json({ message: 'Post updated!' });
-  } catch (error) {
-    return res.status(500).json({ error });
+  // try {
+  const postObject = {};
+  if (req.file || req.body.image === 'null') {
+    postObject.attachement = req.file ? `/images/posts/${req.file.filename}` : undefined;
+    postObject.content = JSON.parse(req.body.post || '{}').content ?? undefined;
+  } else {
+    postObject.content = req.body.content;
   }
+
+  /* eslint-disable no-underscore-dangle */
+  delete postObject.userId;
+  delete postObject._id;
+  /* eslint-enable no-underscore-dangle */
+  delete postObject.usersLiked;
+  const post = await Post.findOne({ _id: req.params.postId });
+  if (!post.user.equals(req.auth.userId) && req.auth.isAdmin !== true) {
+    return res.status(403).json({ error: 'Forbidden !' });
+  }
+  if ((req.file && post.attachement) || req.body.image === 'null') {
+    const filename = post.attachement.split('/images/posts/')[1];
+    await fs.unlink(`./images/posts/${filename}`);
+  }
+  if (
+    (req.body.image === 'null' || (!req.file && !req.body.image && !post.attachement)) &&
+    (postObject.content === undefined || (!postObject.content && !post.content))
+  ) {
+    await Post.deleteOne({ _id: req.params.postId });
+    return res.status(200).json({ message: 'Post deleted !' });
+  }
+  const $unset = {};
+  if (req.body.image === 'null') {
+    $unset.attachement = 1;
+  }
+  if (postObject.content === undefined) {
+    $unset.content = 1;
+  }
+  await Post.updateOne(
+    { _id: req.params.postId },
+    {
+      ...postObject,
+      _id: req.params.postId,
+      $unset,
+    },
+  );
+  return res.status(200).json({ message: 'Post updated!' });
+  // } catch (error) {
+  //   return res.status(500).json({ error });
+  // }
 };
 
 /**
