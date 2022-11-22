@@ -41,7 +41,7 @@ exports.updateUser = async (req, res) => {
     const userObject = req.file
       ? {
           ...JSON.parse(req.body.user),
-          avatarUrl: `/images/avatar/${req.file.filename}`,
+          avatar: `/images/avatar/${req.file.filename}`,
         }
       : { ...req.body };
     userObject.password = userObject.password
@@ -55,8 +55,8 @@ exports.updateUser = async (req, res) => {
       return res.status(403).json({ error: 'Forbidden' });
     }
     const avatarFileName = user.avatar.split('/avatar/')[1];
-    if (req.file && avatarFileName !== 'default_user.jpg') {
-      await fs.unlink(`../images/avatar/${avatarFileName}`);
+    if (req.file && avatarFileName !== 'default_user.png') {
+      await fs.unlink(`./images/avatar/${avatarFileName}`);
     }
     await User.updateOne({ _id: req.params.userId }, { ...userObject, _id: req.params.userId });
     return res.status(200).json({ message: 'User updated !' });
