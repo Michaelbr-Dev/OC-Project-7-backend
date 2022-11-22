@@ -13,7 +13,7 @@
 ## Miscellaneous
 
 [![wakatime](https://wakatime.com/badge/user/c061a4e1-542b-4c9a-9bf0-6d10ba96fece/project/fda20b80-48ad-4caf-abcd-6d8a5555825d.svg)](https://wakatime.com/badge/user/c061a4e1-542b-4c9a-9bf0-6d10ba96fece/project/fda20b80-48ad-4caf-abcd-6d8a5555825d)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e17f0ec87d79417fa28e8f9918e2fd1c)](https://www.codacy.com/gh/Michaelbr-Dev/OC-Project-7-backend/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Michaelbr-Dev/OC-Project-7-backend&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e17f0ec87d79417fa28e8f9918e2fd1c)](https://www.codacy.com/gh/Michaelbr-Dev/OC-Project-7-backend/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Michaelbr-Dev/OC-Project-7-backend&utm_campaign=Badge_Grade)
 
 ## Script
 
@@ -30,11 +30,19 @@ The project consists of building an internal social network for Groupomania empl
 purpose of this tool is to facilitate interactions between colleagues. The HR department of
 Groupomania has imagined several features to promote exchanges between colleagues.
 
-### Back end Installation
+## Project setup
 
-1. Clone this repo.
-2. Run `npm install`.
-3. You can then run the server with `node server`.
+After cloning the project, and going in the created folder, you will need a package manager, like NPM to install the dependencies.
+
+```sh
+npm install
+```
+
+### Compiles and hot-reloads for development
+
+```sh
+node server
+```
 
 The server should run on localhost with default port 3000. If the server runs on another port for any reason, this is printed to the console when the server starts, e.g. Listening on port 3001.
 
